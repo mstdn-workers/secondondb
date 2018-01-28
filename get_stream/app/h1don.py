@@ -1,15 +1,16 @@
+import os
 import requests
 import json
 
 class h1don:
     def __init__(self):
-        mastodon_host = os.getenv("MASTODON_HOST", "")
-        client_name = os.getenv("CLIENT_NAME", "CLIENT")
-        redirect_uris = os.getenv("REDIRECT_URIS", "urn:ietf:wg:oauth:2.0:oob")
-        scopes = os.getenv("SCOPES", "read write follow")
-        client_id = os.getenv("CLIENT_ID", "")
-        client_secret = os.getenv("CLIENT_SECRET", "")
-        access_token = os.getenv("ACCESS_TOKEN", "")
+        self.mastodon_host = os.getenv("MASTODON_HOST", "")
+        self.client_name = os.getenv("CLIENT_NAME", "CLIENT")
+        self.redirect_uris = os.getenv("REDIRECT_URIS", "urn:ietf:wg:oauth:2.0:oob")
+        self.scopes = os.getenv("SCOPES", "read write follow")
+        self.client_id = os.getenv("CLIENT_ID", "")
+        self.client_secret = os.getenv("CLIENT_SECRET", "")
+        self.access_token = os.getenv("ACCESS_TOKEN", "")
 
     def get_LTL_stream(self):
         event = ""
