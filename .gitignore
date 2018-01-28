@@ -150,3 +150,6 @@ venv.bak/
 
 
 # End of https://www.gitignore.io/api/macos,django,python,visualstudiocode
+
+# docker-compose
+.env
