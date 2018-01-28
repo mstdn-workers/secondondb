@@ -5,6 +5,8 @@ services:
     container_name: get_stream
     volumes:
       - "./get_stream/app:/usr/src/app"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/usr/bin/docker:/usr/bin/docker"
     working_dir: "/usr/src/app"
     environment:
       MASTODON_HOST: $MASTODON_HOST 
