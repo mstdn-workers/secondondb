@@ -1,8 +1,10 @@
 import h1don
-import concurrent.futures
+import asyncio
 
-if __name__ == "__main__":
-    mstdn = h1don.h1don()
-    executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
-    executor.submit(mstdn.get_LTL_stream())
-    executor.submit(mstdn.heartbeat_check())
+
+mstdn = h1don.h1don()
+loop = asyncio.get_event_loop()
+result = loop.run_until_complete(asyncio.gather(
+    mstdn.get_LTL_stream(),
+    mstdn.heartbeat_check()
+))
