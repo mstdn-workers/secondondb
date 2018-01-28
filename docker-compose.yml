@@ -1,7 +1,7 @@
 version: '2'
 services:
   get_stream:
-    build: getstream
+    build: get_stream
     container_name: get_stream
     volumes:
       - "./get_stream/app:/usr/src/app"
