@@ -9,11 +9,9 @@ services:
       #- "/usr/bin/docker:/usr/bin/docker"
     working_dir: "/usr/src/app"
     environment:
-      MASTODON_HOST: $MASTODON_HOST 
-      CLIENT_NAME: $CLIENT_NAME 
       CLIENT_ID: $CLIENT_ID 
-      CLIENT_SECRET: $CLIENT_SECRET 
       ACCESS_TOKEN: $ACCESS_TOKEN 
+      API_BASE_URL: $API_BASE_URL
     command: python main.py
     tty: true
     restart: always
