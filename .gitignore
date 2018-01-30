@@ -153,3 +153,6 @@ venv.bak/
 
 # docker-compose
 .env
+
+# mastodon credential
+*.mstdncred
