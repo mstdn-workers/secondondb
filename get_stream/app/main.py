@@ -60,7 +60,7 @@ class MyStreamListener(StreamListener):
 
     def docker_restart(self):
         hostname = os.getenv("HOSTNAME", "get_stream")
-        os.system('docker restart " + hostname')
+        os.system('docker restart ' + hostname)
 
 if __name__ == "__main__":
     listener = MyStreamListener()
