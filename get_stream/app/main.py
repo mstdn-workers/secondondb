@@ -62,7 +62,7 @@ class MyStreamListener(StreamListener):
     def docker_restart(self):
         hostname = os.getenv("HOSTNAME", "get_stream")
         # subprocess.call("docker restart " + hostname)
-        subprocess.call("echo test")
+        os.system('ls -la')
 
 if __name__ == "__main__":
     listener = MyStreamListener()
