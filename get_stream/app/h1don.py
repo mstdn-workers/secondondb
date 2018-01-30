@@ -3,6 +3,7 @@ import requests
 import json
 import time
 import subprocess
+import asyncio
 from datetime import datetime
 
 class h1don:
@@ -35,12 +36,15 @@ class h1don:
                 line_str = line_str.lstrip('data: ')
                 print(event + ': ' + line_str)
 
-    def heartbeat_check(self):
+    async def heartbeat_check(self):
         delay = 15
-        time.sleep(delay)
-        if datetime.now() - self.heartbeat > delay:
-            self.docker_restart()
+        while True:
+            await asyncio.sleep(delay)
+            print("heartbeat checking now.")
+            if datetime.now() - self.heartbeat > delay:
+                self.docker_restart()
 
     def docker_restart(self):
         hostname = os.getenv("HOSTNAME", "get_stream")
-        subprocess.call("docker restart " + hostname)
+        print(hostname+"'s session is down!")
+        # subprocess.call("docker restart " + hostname)
