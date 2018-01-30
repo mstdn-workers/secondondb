@@ -1,4 +1,7 @@
 import os
+import time
+import threading
+from datetime import datetime, timedelta
 from mastodon import Mastodon, StreamListener
 
 client_name = os.getenv("CLIENT_NAME", "CLIENT")
@@ -17,14 +20,35 @@ mastodon.log_in(mastodon_user, mastodon_pass,to_file = user_credfile_name)
 
 class MyStreamListener(StreamListener):
     def __init__(self):
+        self.heartbeat_time = datetime.now()
+        self.timeout_seconds = 60
         super(MyStreamListener, self).__init__()
+
+    def heartbeat_check(self):
+        while True:
+            # inloop something
+            compare_time = datetime.now() - self.heartbeat_time
+            print("inloop: " + str(compare_time))
+            if(compare_time > timedelta(seconds = self.timeout_seconds)):
+                print("Emergency! connection lost!!")
+            elif(compare_time > timedelta(seconds = self.timeout_seconds / 2 )):
+                print("Warning! Heartbeat is delay!")
+                self.docker_restart()
+            time.sleep(10)
 
     def handle_stream(self, response):
         try:
+            threading.Thread(target=self.heartbeat_check).start()
             super().handle_stream(response)
-        except:
+        except Exception as e:
             # do something
+            print('---Error!---   '+e)
             raise
+    
+    def handle_heartbeat(self):
+        print(':thump')
+        self.heartbeat_time = datetime.now()
+        pass
     
     def on_update(self, status):
         print("update: "+str(status['id']))
@@ -33,6 +57,10 @@ class MyStreamListener(StreamListener):
     def on_delete(self, status_id):
         print("delete: "+str(status_id))
         pass
+
+    def docker_restart(self):
+        hostname = os.getenv("HOSTNAME", "get_stream")
+        os.system('docker restart ' + hostname)
 
 if __name__ == "__main__":
     listener = MyStreamListener()
