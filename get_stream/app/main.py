@@ -1,5 +1,4 @@
 import os
-import subprocess
 import time
 import threading
 from datetime import datetime, timedelta
@@ -61,8 +60,7 @@ class MyStreamListener(StreamListener):
 
     def docker_restart(self):
         hostname = os.getenv("HOSTNAME", "get_stream")
-        # subprocess.call("docker restart " + hostname)
-        os.system('ls -la')
+        os.system('docker restart " + hostname')
 
 if __name__ == "__main__":
     listener = MyStreamListener()
