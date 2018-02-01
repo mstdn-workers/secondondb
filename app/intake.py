@@ -8,8 +8,8 @@ client_name = os.getenv("CLIENT_NAME", "CLIENT")
 api_base_url = os.getenv("API_BASE_URL", "---")
 mastodon_user = os.getenv("MASTODON_USER", "---")
 mastodon_pass = os.getenv("MASTODON_PASS", "---")
-client_credfile_name = "client.mstdncred"
-user_credfile_name = "user.mstdncred"
+client_credfile_name = ".client.mstdncred"
+user_credfile_name = ".user.mstdncred"
 
 Mastodon.create_app(client_name, api_base_url = api_base_url, to_file = client_credfile_name)
 mastodon = Mastodon(client_id=client_credfile_name, api_base_url = api_base_url)

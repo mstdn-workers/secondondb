@@ -1,18 +1,40 @@
 version: '2'
 services:
-  get_stream:
-    build: get_stream
-    container_name: get_stream
+  app_data:
+    image: busybox
+    container_name: app_data
     volumes:
-      - "./get_stream/app:/usr/src/app"
+      - "./app:/usr/src/app"
+  INTAKE:
+    build: INTAKE
+    container_name: INTAKE
+    volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "/usr/bin/docker:/usr/bin/docker"
     working_dir: "/usr/src/app"
+    volumes_from:
+      - app_data
     environment:
       CLIENT_MAME: $CLIENT_NAME
       MASTODON_USER: $MASTODON_USER
       MASTODON_PASS: $MASTODON_PASS
       API_BASE_URL: $API_BASE_URL
-    command: python main.py
+    command: python intake.py
     tty: true
     restart: always
+  
+  BUCKET_data:
+    image: busybox
+    container_name: BUCKET_data
+    volumes:
+     - "./BUCKET/data:/var/lib/postgresql/data"
+
+  BUCKET:
+    image: postgres:latest
+    container_name: BUCKET
+    volumes_from:
+      - BUCKET_data
+    environment:
+      POSTGRES_DB: BUCKET
+      POSTGRES_USER: $DB_USER
+      POSTGRES_PASSWORD: $DB_PASS
