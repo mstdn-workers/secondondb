@@ -14,6 +14,16 @@
  - (同)toot情報を暗号化し、hook先にpost送信  
  - (hook受信側システム)受信したデータを復号し、利活用  
 
+## システム構成
+ - INTAKE
+ - BUCKET
+ - SPRINKLER
+ - BULB
+ - TANK
+ - RECEPTOR
+ - MANAGER(仮)
+ - LADLE
+
 ## タスク
 
 - [x] LTL取得機能
