@@ -9,6 +9,11 @@ class db_treat:
             host=dsn_dict['host'], 
             port=dsn_dict['port'])
         self.cursor = connection.cursor()
+    
+    def close(self):
+        self.cursor.close()
+        self.connection.close()
 
-    def table_prep(self):
+    def insert(self, table, value):
+        self.cursor.execute("INSERT INTO %s VALUES (%s)", (table, value))
         

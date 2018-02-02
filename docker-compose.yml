@@ -7,6 +7,7 @@ services:
       - "./app:/usr/src/app"
   INTAKE:
     build: INTAKE
+    image: intake
     container_name: INTAKE
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
@@ -27,14 +28,13 @@ services:
     image: busybox
     container_name: BUCKET_data
     volumes:
-     - "./BUCKET/data:/var/lib/postgresql/data"
+     - "./BUCKET/postgres_data:/var/lib/postgresql"
 
   BUCKET:
-    image: postgres:latest
+    build: BUCKET
+    image: bucket
     container_name: BUCKET
     volumes_from:
       - BUCKET_data
     environment:
-      POSTGRES_DB: BUCKET
-      POSTGRES_USER: $DB_USER
       POSTGRES_PASSWORD: $DB_PASS
