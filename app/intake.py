@@ -52,14 +52,8 @@ class MyStreamListener(StreamListener):
         print("update: "+str(status['id']))
         print(status.mentions)
         
-        dsn_dict = {
-            'dbname': 'postgres',
-            'user': 'postgres',
-            'password': 'P0stgres!',
-            'host': 'BUCKET',
-            'port': '5432'
-        }
-        db = db_treat(dsn_dict)
+        dsn = os.environ.get('DATABASE_URL')
+        db = db_treat(dsn)
         db.insert(str(status['id']), status['json_str'])
         pass
 
