@@ -3,8 +3,8 @@ import time
 import threading
 from db_treat import db_treat
 from datetime import datetime, timedelta
-from libs.h1dedon.Mastodon import Mastodon
-from libs.h1dedon.streaming import StreamListener
+from libs.mastodon.Mastodon import Mastodon
+from libs.mastodon.streaming import StreamListener
 
 client_name = os.getenv("CLIENT_NAME", "CLIENT")
 api_base_url = os.getenv("API_BASE_URL", "---")
@@ -62,8 +62,6 @@ class MyStreamListener(StreamListener):
         }
         db = db_treat(dsn_dict)
         db.insert(str(status['id']), status['json_str'])
-        db.close()
-        
         pass
 
     def on_delete(self, status_id):
