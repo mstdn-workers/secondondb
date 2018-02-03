@@ -156,3 +156,6 @@ venv.bak/
 
 # mastodon credential
 *.mstdncred
+
+# postgres data
+BUCKET/data
