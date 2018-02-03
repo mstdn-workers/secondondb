@@ -12,7 +12,7 @@ class db_treat:
             host=self.dsn_dict['host'], 
             port=self.dsn_dict['port']) as conn:
             cursor = conn.cursor()
-            sql = "INSERT INTO localtimeline VALUES (" + id + ", '" + json_str +"');"
+            sql = "INSERT INTO localtimeline VALUES ('" + id + "', '" + json_str +"');"
             print(sql)
             cursor.execute(sql)
             conn.commit()
