@@ -54,7 +54,6 @@ class MyStreamListener(StreamListener):
         print(status.mentions)
         try:
             dsn = os.environ.get('DATABASE_URL')
-            print(dsn)
             db = db_treat(dsn)
             db.insert(str(status['id']), status['json_str'])
         except:
