@@ -51,7 +51,6 @@ class MyStreamListener(StreamListener):
     
     def on_update(self, status):
         print("update: "+str(status['id']))
-        print(status.mentions)
         try:
             dsn = os.environ.get('DATABASE_URL')
             db = db_treat(dsn)
