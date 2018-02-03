@@ -1,9 +1,10 @@
 import os
 import time
 import threading
-import db_treat
+from db_treat import db_treat
 from datetime import datetime, timedelta
-from mastodon import Mastodon, StreamListener
+from libs.h1dedon.Mastodon import Mastodon
+from libs.h1dedon.streaming import StreamListener
 
 client_name = os.getenv("CLIENT_NAME", "CLIENT")
 api_base_url = os.getenv("API_BASE_URL", "---")
@@ -50,6 +51,19 @@ class MyStreamListener(StreamListener):
     
     def on_update(self, status):
         print("update: "+str(status['id']))
+        print(status.mentions)
+        
+        dsn_dict = {
+            'dbname': 'postgres',
+            'user': 'postgres',
+            'password': 'P0stgres!',
+            'host': 'BUCKET',
+            'port': '5432'
+        }
+        db = db_treat(dsn_dict)
+        db.insert(str(status['id']), status['json_str'])
+        db.close()
+        
         pass
 
     def on_delete(self, status_id):
