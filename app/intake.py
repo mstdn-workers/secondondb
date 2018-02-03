@@ -52,11 +52,13 @@ class MyStreamListener(StreamListener):
     def on_update(self, status):
         print("update: "+str(status['id']))
         print(status.mentions)
-        
-        dsn = os.environ.get('DATABASE_URL')
-        print(dsn)
-        db = db_treat(dsn)
-        db.insert(str(status['id']), status['json_str'])
+        try:
+            dsn = os.environ.get('DATABASE_URL')
+            print(dsn)
+            db = db_treat(dsn)
+            db.insert(str(status['id']), status['json_str'])
+        except:
+            pass
         pass
 
     def on_delete(self, status_id):
