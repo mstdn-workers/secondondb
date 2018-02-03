@@ -41,7 +41,6 @@ class MyStreamListener(StreamListener):
             super().handle_stream(response)
         except Exception as e:
             # do something
-            print('---Error!---   '+e)
             raise
     
     def handle_heartbeat(self):
