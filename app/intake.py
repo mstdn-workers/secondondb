@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 import threading
 from db_treat import db_treat
@@ -39,7 +40,7 @@ class MyStreamListener(StreamListener):
         try:
             threading.Thread(target=self.heartbeat_check).start()
             super().handle_stream(response)
-        except Exception as e:
+        except:
             # do something
             raise
     
@@ -64,7 +65,8 @@ class MyStreamListener(StreamListener):
 
     def docker_restart(self):
         hostname = os.getenv("HOSTNAME", "get_stream")
-        os.system('docker restart ' + hostname)
+        # os.system('docker restart ' + hostname)
+        sys.exit()
 
 if __name__ == "__main__":
     listener = MyStreamListener()
