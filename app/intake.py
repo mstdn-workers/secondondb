@@ -21,9 +21,19 @@ mastodon.log_in(mastodon_user, mastodon_pass,to_file = user_credfile_name)
 class MyStreamListener(StreamListener):
     def __init__(self):
         self.heartbeat_time = datetime.now()
-        self.timeout_seconds = 60
+        self.timeout_seconds = 40
+        self.health = True
         super(MyStreamListener, self).__init__()
 
+    def handle_stream(self, response):
+        try:
+            threading.Thread(target=self.heartbeat_check).start()
+            super().handle_stream(response)
+            sys.exit()
+        except:
+            # do something
+            raise
+ 
     def heartbeat_check(self):
         while True:
             # inloop something
@@ -31,24 +41,17 @@ class MyStreamListener(StreamListener):
             print("inloop: " + str(compare_time))
             if(compare_time > timedelta(seconds = self.timeout_seconds)):
                 print("Emergency! connection lost!!")
+                raise Exception("HeartBeat lost.");
             elif(compare_time > timedelta(seconds = self.timeout_seconds / 2 )):
                 print("Warning! Heartbeat is delay!")
-                self.docker_restart()
+                # self.docker_restart()
             time.sleep(10)
-
-    def handle_stream(self, response):
-        try:
-            threading.Thread(target=self.heartbeat_check).start()
-            super().handle_stream(response)
-        except:
-            # do something
-            raise
-    
+      
     def handle_heartbeat(self):
         print(':thump')
         self.heartbeat_time = datetime.now()
         pass
-    
+ 
     def on_update(self, status):
         print("update: "+str(status['id']))
         try:
@@ -65,8 +68,8 @@ class MyStreamListener(StreamListener):
 
     def docker_restart(self):
         hostname = os.getenv("HOSTNAME", "get_stream")
-        sys.exit()
+        sys.exit(1)
 
 if __name__ == "__main__":
     listener = MyStreamListener()
-    mastodon.stream_local(listener)
+    mastodon.stream_local(listener) 
