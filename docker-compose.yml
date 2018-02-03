@@ -9,9 +9,23 @@ services:
     build: INTAKE
     image: intake
     container_name: INTAKE
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
-      # - "/usr/bin/docker:/usr/bin/docker"
+    working_dir: "/usr/src/app"
+    volumes_from:
+      - app_data
+    environment:
+      CLIENT_MAME: $CLIENT_NAME
+      MASTODON_USER: $MASTODON_USER
+      MASTODON_PASS: $MASTODON_PASS
+      API_BASE_URL: $API_BASE_URL
+      DATABASE_URL: $DATABASE_URL
+    command: python intake.py
+    tty: true
+    restart: always
+
+  INTAKE2:
+    build: INTAKE
+    image: intake
+    container_name: INTAKE2
     working_dir: "/usr/src/app"
     volumes_from:
       - app_data
@@ -40,4 +54,5 @@ services:
     # volumes_from:
     #   - BUCKET_data
     environment:
-      POSTGRES_PASSWORD: $DB_PASS
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    restart: always
