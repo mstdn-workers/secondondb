@@ -53,6 +53,7 @@ class MyStreamListener(StreamListener):
         print(status.mentions)
         
         dsn = os.environ.get('DATABASE_URL')
+        print(dsn)
         db = db_treat(dsn)
         db.insert(str(status['id']), status['json_str'])
         pass

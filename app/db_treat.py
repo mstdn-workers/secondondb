@@ -2,6 +2,7 @@ import psycopg2
 
 class db_treat:
     def __init__(self, dsn):
+        print(dsn)
         self.dsn = dsn
 
     def insert(self, id, json_str):
