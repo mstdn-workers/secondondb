@@ -64,6 +64,12 @@ class MyStreamListener(StreamListener):
 
     def on_delete(self, status_id):
         print("delete: "+str(status_id))
+        try:
+            dsn = os.environ.get('DATABASE_URL')
+            db = db_treat(dsn)
+            db.delete(str(status_id))
+        except:
+            pass
         pass
 
     def docker_restart(self):
