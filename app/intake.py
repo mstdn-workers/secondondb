@@ -1,9 +1,10 @@
 import os
 import time
 import threading
-import db_treat
+from db_treat import db_treat
 from datetime import datetime, timedelta
-from mastodon import Mastodon, StreamListener
+from libs.mastodon.Mastodon import Mastodon
+from libs.mastodon.streaming import StreamListener
 
 client_name = os.getenv("CLIENT_NAME", "CLIENT")
 api_base_url = os.getenv("API_BASE_URL", "---")
@@ -40,7 +41,6 @@ class MyStreamListener(StreamListener):
             super().handle_stream(response)
         except Exception as e:
             # do something
-            print('---Error!---   '+e)
             raise
     
     def handle_heartbeat(self):
@@ -50,6 +50,12 @@ class MyStreamListener(StreamListener):
     
     def on_update(self, status):
         print("update: "+str(status['id']))
+        print(status.mentions)
+        
+        dsn = os.environ.get('DATABASE_URL')
+        print(dsn)
+        db = db_treat(dsn)
+        db.insert(str(status['id']), status['json_str'])
         pass
 
     def on_delete(self, status_id):

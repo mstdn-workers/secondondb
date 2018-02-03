@@ -1,19 +1,17 @@
 import psycopg2
 
 class db_treat:
-    def __init__(self, dsn_dict):
-        self.connection = psycopg2.connect(
-            dbname=dsn_dict['dbname'], 
-            user=dsn_dict['user'], 
-            password=dsn_dict['password'], 
-            host=dsn_dict['host'], 
-            port=dsn_dict['port'])
-        self.cursor = connection.cursor()
-    
-    def close(self):
-        self.cursor.close()
-        self.connection.close()
+    def __init__(self, dsn):
+        print(dsn)
+        self.dsn = dsn
 
-    def insert(self, table, value):
-        self.cursor.execute("INSERT INTO %s VALUES (%s)", (table, value))
+    def insert(self, id, json_str):
+        with psycopg2.connect(self.dsn) as conn:
+            cur = conn.cursor()
+            sql = "INSERT INTO localtimeline VALUES ('" + id + "', '" + json_str +"');"
+            print(sql)
+            cur.execute(sql)
+            conn.commit()
+
+
         
