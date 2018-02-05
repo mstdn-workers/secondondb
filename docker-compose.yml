@@ -38,6 +38,20 @@ services:
     command: python intake.py
     tty: true
     restart: always
+
+
+  SPRINKLER:
+    build: SPRINKLER
+    image: sprinkler
+    container_name: SPRINKLER
+    working_dir: "/usr/src/app"
+    volumes_from:
+      - app_data
+    environment:
+      DATABASE_URL: $DATABASE_URL
+    command: python sprinkler.py
+    tty: true
+    restart: always
   
   BUCKET_data:
     image: busybox
