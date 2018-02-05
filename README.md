@@ -20,11 +20,11 @@
     + 丼に接続し、ストリーミングAPIにより、データを受信する  
     + 受信したデータを元に、DBの更新を行う  
     + 複数台同時起動し、接続障害に備える  
- - **BUCKET** 10%  
+ - **BUCKET** 70%  
     DBサーバ  
     + statusなど、公開情報を保存するDB
     + DB更新時にSPRINKLERに通知する機能を有する  
-    + 後々、Active-Standby構成や、負荷分散に対応する
+    + 後々、Active-Standby構成や、負荷分散に対応する
  - **SPRINKLER** 0%  
     Hook送信サーバ  
     + BUCKETに常時接続し、DB更新時に登録済みのHook先にeventとidをPOSTする  
@@ -48,3 +48,6 @@
    + 統合基盤使用登録作業を行う
  - **CONTROLER** 0%  
    管理者ポータル  
+ - **HOSE** 0%  
+   メッセージキューイングサービス  
+   + 主にINTAKEとSPRINKLER間の通知機能に使う。  
