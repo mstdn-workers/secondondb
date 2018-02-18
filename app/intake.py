@@ -58,6 +58,7 @@ class MyStreamListener(StreamListener):
             dsn = os.environ.get('DATABASE_URL')
             db = db_treat(dsn)
             db.insert(str(status['id']), status['json_str'])
+            notifSend('update', str(status['id'])
         except:
             pass
         pass
@@ -68,6 +69,7 @@ class MyStreamListener(StreamListener):
             dsn = os.environ.get('DATABASE_URL')
             db = db_treat(dsn)
             db.delete(str(status_id))
+            notifSend('delete', status_id)
         except:
             pass
         pass
@@ -75,6 +77,16 @@ class MyStreamListener(StreamListener):
     def docker_restart(self):
         hostname = os.getenv("HOSTNAME", "get_stream")
         sys.exit(1)
+
+def notifSend(event, id):
+    host = 'rabbitmq'
+    queue = 'event_notify'
+    body = json.dumps({'event': event, 'id': id}).encode()
+    with  pika.BlockingConnection(pika.ConnectionParameters(host)) as conn:
+        channel =conn.channel()
+        channel.queue_declare(queue=queue)
+        channel.basic_publish(exchange='',routing_key=queue,body=body)
+        print('sent')
 
 if __name__ == "__main__":
     listener = MyStreamListener()
