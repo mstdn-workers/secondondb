@@ -11,7 +11,6 @@ def hook(event, id, URL, secret):
     print(post_data)
     with requests.session() as client:
         try:
-            # print("postdata: " + post_data)
             r = client.post(URL, data=post_data)
             print(r.text)
         except Exception as e:
@@ -24,14 +23,14 @@ def callback(ch, method, properties, body):
     sprinkl( json.loads(body.decode()) )
     pass
 
-def getToHookURL():
+def getURL4Hook():
     # いいかんじにリストURLとsecretのKVリスト作る
-    URLlist = None
+    URLlist = [{}, ]
     return URLlist
 
 def sprinkl(status):
     try:
-        for url in getToHookURL():
+        for url in getURL4Hook():
             hook(status['event'], status['id'], url['url'], url['secret'])
     except:
         pass
