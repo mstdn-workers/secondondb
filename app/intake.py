@@ -2,6 +2,8 @@ import os
 import sys
 import time
 import threading
+import pika
+import json
 from db_treat import db_treat
 from datetime import datetime, timedelta
 from libs.mastodon.Mastodon import Mastodon
@@ -58,7 +60,7 @@ class MyStreamListener(StreamListener):
             dsn = os.environ.get('DATABASE_URL')
             db = db_treat(dsn)
             db.insert(str(status['id']), status['json_str'])
-            notifSend('update', str(status['id'])
+            notifSend('update', str(status['id']))
         except:
             pass
         pass
@@ -79,14 +81,20 @@ class MyStreamListener(StreamListener):
         sys.exit(1)
 
 def notifSend(event, id):
+    print('notificateind...')
     host = 'rabbitmq'
     queue = 'event_notify'
     body = json.dumps({'event': event, 'id': id}).encode()
-    with  pika.BlockingConnection(pika.ConnectionParameters(host)) as conn:
-        channel =conn.channel()
-        channel.queue_declare(queue=queue)
-        channel.basic_publish(exchange='',routing_key=queue,body=body)
-        print('sent')
+    print(body)
+    try:
+        with  pika.BlockingConnection(pika.ConnectionParameters(host)) as conn:
+            channel =conn.channel()
+            channel.queue_declare(queue=queue)
+            channel.basic_publish(exchange='',routing_key=queue,body=body)
+            print('sent')
+    except:
+        print('except!')
+        pass
 
 if __name__ == "__main__":
     listener = MyStreamListener()

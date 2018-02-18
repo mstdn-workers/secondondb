@@ -1,6 +1,7 @@
 import pika
 import requests
 import json
+import time
 
 def hook(event, id, URL, secret):
     post_data = {
@@ -29,6 +30,7 @@ def getURL4Hook():
     return URLlist
 
 def sprinkl(status):
+    print('recv! ' + status['event'] + status['id'])
     try:
         for url in getURL4Hook():
             hook(status['event'], status['id'], url['url'], url['secret'])
@@ -43,4 +45,5 @@ def recv(host, queue):
         channel.start_consuming()
 
 if __name__ == '__main__':
+    time.sleep(10)
     recv('rabbitmq', 'event_notify')
