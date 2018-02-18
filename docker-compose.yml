@@ -70,3 +70,8 @@ services:
     environment:
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
     restart: always
+
+  rabbitmq:
+    image: rabbitmq:management
+    tty: true
+    container_name: rabbitmq

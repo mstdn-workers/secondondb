@@ -3,3 +3,4 @@ psycopg2
 pytz
 python-dateutil
 decorator
+pika
