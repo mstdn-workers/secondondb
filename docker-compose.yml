@@ -93,7 +93,6 @@ services:
     volumes_from:
       - app_data
     command: "gunicorn BULB.wsgi:application -b 0.0.0.0:80"
-    # command: ls -la
     tty: true
     restart: always
 
