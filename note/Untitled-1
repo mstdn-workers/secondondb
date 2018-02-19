@@ -1,0 +1,86 @@
+
+{
+  'id': 99455855808761436, 
+  'created_at': datetime.datetime(2018, 2, 2, 12, 52, 4, 830000, tzinfo=tzlocal()), 
+  'in_reply_to_id': None,'
+  in_reply_to_account_id': None, 
+  'sensitive': False, 
+  'spoiler_text': '', 
+  'visibility': 'public', 
+  'language': 'ja', 
+  'uri': 'https://mstdn-workers.com/users/ripple_naip/statuses/99455855808761436', 
+  'content': '<p>これではグラボ換えないと</p>', 
+  'url': 'https://mstdn-workers.com/@ripple_naip/99455855808761436', 
+  'reblogs_count': 0, 
+  'favourites_count': 0, 
+  'reblog': None, 
+  'application': None, 
+  'account': {
+    'id': 361, 
+    'username': 'ripple_naip', 
+    'acct': 'ripple_naip', 
+    'display_name': 'りっぷる', 
+    'locked': False, 
+    'created_at': datetime.datetime(2017, 4, 14, 13, 50, 1, 203000, tzinfo=tzlocal()), 
+    'note': '<p>猫が好き。百合も好き。小さめが良い。<br />干し芋：  <a href="http://amzn.asia/0HyUaic" rel="nofollow noopener" target="_blank"><span class="invisible">http://</span><span class="">amzn.asia/0HyUaic</span><span class="invisible"></span></a> <br />社畜丼用Chrome拡張作ったよ：<a href="https://goo.gl/y7R2Dt" rel="nofollow noopener" target="_blank"><span class="invisible">https://</span><span class="">goo.gl/y7R2Dt</span><span class="invisible"></span></a><br />お久しぶりbot稼働中：新人さんとお久の人に自動で挨拶します。</p>', 
+    'url': 'https://mstdn-workers.com/@ripple_naip', 
+    'avatar': 'https://s3-ap-northeast-1.amazonaws.com/mstdn-workers/accounts/avatars/000/000/361/original/9b258e1b7a0a6e88.jpeg', 
+    'avatar_static': 'https://s3-ap-northeast-1.amazonaws.com/mstdn-workers/accounts/avatars/000/000/361/original/9b258e1b7a0a6e88.jpeg', 
+    'header': 'https://s3-ap-northeast-1.amazonaws.com/mstdn-workers/accounts/headers/000/000/361/original/776e93366580eae4.png', 
+    'header_static': 'https://s3-ap-northeast-1.amazonaws.com/mstdn-workers/accounts/headers/000/000/361/original/776e93366580eae4.png', 
+    'followers_count': 60, 
+    'following_count': 22, 
+    'statuses_count': 8660
+  }, 
+  'media_attachments': 
+    [{
+      'id': 808833, 
+      'type': 'image', 
+      'url': 'https://s3-ap-northeast-1.amazonaws.com/mstdn-workers/media_attachments/files/000/808/833/original/ae78734855d95ec4.jpg', 
+      'preview_url': 'https://s3-ap-northeast-1.amazonaws.com/mstdn-workers/media_attachments/files/000/808/833/small/ae78734855d95ec4.jpg', 
+      'remote_url': None, 
+      'text_url': 'https://mstdn-workers.com/media/_5geFPx3daHmF9aA9r4', 
+      'meta': {
+        'original': {
+          'width': 800, 
+          'height': 477, 
+          'size': '800x477', 
+          'aspect': 1.6771488469601676
+        }, 
+        'small': {'width': 400, 'height': 239, 'size': '400x239', 'aspect': 1.6736401673640167}
+      }, 
+      'description': None
+    }], 
+  'mentions': [], 
+  'tags': [], 
+  'emojis': []}
+
+
+status.
+
+
+    def insert(self, status):
+        self.cursor.execute("INSERT INTO localtimeline VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", [
+            status.id,
+            status.created_at,
+            status.in_reply_to_id,
+            status.in_reply_to_account_id,
+            status.sensitive,
+            status.spoiler_text,
+            status.visibility,
+            status.language,
+            status.uri,
+            status.content,
+            status.url,
+            status.reblogs_count,
+            status.favourites_count,
+            status.reblog,
+            status.application,
+            status.account,
+            status.media_attachments,
+            status.mentions,
+            status.tags,
+            status.emojis
+        ])
+        self.connection.commit()
+ 
