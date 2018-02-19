@@ -89,10 +89,11 @@ services:
     build: BULB
     image: bulb
     container_name: BULB
-    working_dir: "/usr/src/app"
+    working_dir: "/usr/src/app/BULB"
     volumes_from:
       - app_data
-    command: "gunicorn BULB.bulb.wsgi:application -b 0.0.0.0:80"
+    command: "gunicorn BULB.wsgi:application -b 0.0.0.0:80"
+    # command: ls -la
     tty: true
     restart: always
 
