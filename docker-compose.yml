@@ -17,7 +17,7 @@ services:
       MASTODON_USER: $MASTODON_USER
       MASTODON_PASS: $MASTODON_PASS
       API_BASE_URL: $API_BASE_URL
-      DATABASE_URL: $DATABASE_URL
+      DATABASE_URL: $BUCKET_DB_URL
     command: python intake.py
     tty: true
     restart: always
@@ -34,7 +34,7 @@ services:
       MASTODON_USER: $MASTODON_USER
       MASTODON_PASS: $MASTODON_PASS
       API_BASE_URL: $API_BASE_URL
-      DATABASE_URL: $DATABASE_URL
+      DATABASE_URL: $BUCKET_DB_URL
     command: python intake.py
     tty: true
     restart: always
@@ -47,8 +47,6 @@ services:
     working_dir: "/usr/src/app"
     volumes_from:
       - app_data
-    environment:
-      DATABASE_URL: $DATABASE_URL
     command: python sprinkler.py
     tty: true
     restart: always
@@ -79,13 +77,21 @@ services:
     build: TANK
     image: tank
     container_name: TANK
-    ports:
-      - "5432:5432"
+    # ports:
+    #   - "5432:5432"
     # volumes_from:
     #   - TANK_data
     environment:
       POSTGRES_PASSWORD: $TANK_PASSWORD
     restart: always
+
+  BULB:
+    image: suzel/docker-postgrest
+    container_name: BULB
+    ports:
+      - "3000:3000"
+    environment:
+      PGRST_DB_URI: $TANK_DB_URL
 
   rabbitmq:
     image: rabbitmq:management
