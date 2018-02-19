@@ -93,8 +93,12 @@ services:
     volumes_from:
       - app_data
     command: "gunicorn BULB.wsgi:application -b 0.0.0.0:80"
+    environment:
+      DB_PASSWORD: $TANK_PASSWORD
     tty: true
     restart: always
+    ports:
+      - "8888:80"
 
   rabbitmq:
     image: rabbitmq:management
