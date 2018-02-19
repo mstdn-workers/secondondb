@@ -58,7 +58,6 @@ services:
     container_name: BUCKET_data
     volumes:
       - "./BUCKET/postgres_data:/var/lib/postgresql"
-
   BUCKET:
     build: BUCKET
     image: bucket
@@ -68,7 +67,24 @@ services:
     # volumes_from:
     #   - BUCKET_data
     environment:
-      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_PASSWORD: $BUCKET_PASSWORD
+    restart: always
+
+  TANK_data:
+    image: busybox
+    container_name: TANK_data
+    volumes:
+      - "./TANK/postgres_data:/var/lib/postgresql"
+  TANK:
+    build: TANK
+    image: tank
+    container_name: TANK
+    ports:
+      - "5432:5432"
+    # volumes_from:
+    #   - TANK_data
+    environment:
+      POSTGRES_PASSWORD: $TANK_PASSWORD
     restart: always
 
   rabbitmq:
