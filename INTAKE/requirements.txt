@@ -4,3 +4,4 @@ pytz
 python-dateutil
 decorator
 pika
+SQLAlchemy
