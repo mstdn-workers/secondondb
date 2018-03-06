@@ -17,5 +17,3 @@ class db_treat:
             cur.execute(sql)
             conn.commit() 
 
-
-        
