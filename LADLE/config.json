@@ -1,0 +1,7 @@
+// config.json
+{
+    "hostname": "db",
+    "database": "postgres",
+    "username": "postgres",
+    "password": "P0stgres!"
+}
