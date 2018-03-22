@@ -17,45 +17,45 @@ services:
       MASTODON_USER: $MASTODON_USER
       MASTODON_PASS: $MASTODON_PASS
       API_BASE_URL: $API_BASE_URL
-      DATABASE_URL: $BUCKET_DB_URL
+      DB_URL: $BUCKET_DB_URL
     command: python intake.py
     tty: true
     restart: always
 
-  INTAKE2:
-    build: INTAKE
-    image: intake
-    container_name: INTAKE2
-    working_dir: "/usr/src/app"
-    volumes_from:
-      - app_data
-    environment:
-      CLIENT_MAME: $CLIENT_NAME
-      MASTODON_USER: $MASTODON_USER
-      MASTODON_PASS: $MASTODON_PASS
-      API_BASE_URL: $API_BASE_URL
-      DATABASE_URL: $BUCKET_DB_URL
-    command: python intake.py
-    tty: true
-    restart: always
+  #INTAKE2:
+  #  build: INTAKE
+  #  image: intake
+  #  container_name: INTAKE2
+  #  working_dir: "/usr/src/app"
+  #  volumes_from:
+  #    - app_data
+  #  environment:
+  #    CLIENT_MAME: $CLIENT_NAME
+  #    MASTODON_USER: $MASTODON_USER
+  #    MASTODON_PASS: $MASTODON_PASS
+  #    API_BASE_URL: $API_BASE_URL
+  #    DATABASE_URL: $BUCKET_DB_URL
+  #  command: python intake.py
+  #  tty: true
+  #  restart: always
 
 
-  SPRINKLER:
-    build: SPRINKLER
-    image: sprinkler
-    container_name: SPRINKLER
-    working_dir: "/usr/src/app"
-    volumes_from:
-      - app_data
-    command: python sprinkler.py
-    tty: true
-    restart: always
+  #SPRINKLER:
+  #  build: SPRINKLER
+  #  image: sprinkler
+  #  container_name: SPRINKLER
+  #  working_dir: "/usr/src/app"
+  #  volumes_from:
+  #    - app_data
+  #  command: python sprinkler.py
+  #  tty: true
+  #  restart: always
   
-  BUCKET_data:
-    image: busybox
-    container_name: BUCKET_data
-    volumes:
-      - "./BUCKET/postgres_data:/var/lib/postgresql"
+  #BUCKET_data:
+  #  image: busybox
+  #  container_name: BUCKET_data
+  #  volumes:
+  #    - "./BUCKET/postgres_data:/var/lib/postgresql"
   BUCKET:
     build: BUCKET
     image: bucket
@@ -68,37 +68,37 @@ services:
       POSTGRES_PASSWORD: $BUCKET_PASSWORD
     restart: always
 
-  TANK_data:
-    image: busybox
-    container_name: TANK_data
-    volumes:
-      - "./TANK/postgres_data:/var/lib/postgresql"
-  TANK:
-    build: TANK
-    image: tank
-    container_name: TANK
-    ports:
-      - "5433:5432"
-    # volumes_from:
-    #   - TANK_data
-    environment:
-      POSTGRES_PASSWORD: $TANK_PASSWORD
-    restart: always
+  #TANK_data:
+  #  image: busybox
+  #  container_name: TANK_data
+  #  volumes:
+  #    - "./TANK/postgres_data:/var/lib/postgresql"
+  #TANK:
+  #  build: TANK
+  #  image: tank
+  #  container_name: TANK
+  #  ports:
+  #    - "5433:5432"
+  #  # volumes_from:
+  #  #   - TANK_data
+  #  environment:
+  #    POSTGRES_PASSWORD: $TANK_PASSWORD
+  #  restart: always
 
-  BULB:
-    build: BULB
-    image: bulb
-    container_name: BULB
-    working_dir: "/usr/src/app/BULB"
-    volumes_from:
-      - app_data
-    command: "gunicorn BULB.wsgi:application -b 0.0.0.0:80"
-    environment:
-      DB_PASSWORD: $TANK_PASSWORD
-    tty: true
-    restart: always
-    ports:
-      - "8888:80"
+  #BULB:
+  #  build: BULB
+  #  image: bulb
+  #  container_name: BULB
+  #  working_dir: "/usr/src/app/BULB"
+  #  volumes_from:
+  #    - app_data
+  #  command: "gunicorn BULB.wsgi:application -b 0.0.0.0:80"
+  #  environment:
+  #    DB_PASSWORD: $TANK_PASSWORD
+  #  tty: true
+  #  restart: always
+  #  ports:
+  #    - "8888:80"
 
   rabbitmq:
     image: rabbitmq:management
