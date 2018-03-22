@@ -158,4 +158,4 @@ venv.bak/
 *.mstdncred
 
 # postgres data
-BUCKET/data
+db_data
